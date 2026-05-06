@@ -3,20 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="horizontal"
     android:background="@android:color/transparent"
-    android:padding="8dp">
+    android:gravity="center_vertical"
+    android:padding="4dp">
 
-    <!-- City 1: Astrakhan -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@android:color/transparent"
-        android:padding="12dp">
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/city1_name"
@@ -24,10 +23,8 @@
             android:layout_height="wrap_content"
             android:text="Астрахань"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            android:gravity="center"
-            android:alpha="0.9"/>
+            android:textSize="13sp"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/city1_time"
@@ -35,41 +32,33 @@
             android:layout_height="wrap_content"
             android:text="00:00"
             android:textColor="#FFFFFF"
-            android:textSize="36sp"
+            android:textSize="34sp"
             android:textStyle="bold"
-            android:gravity="center"
-            android:letterSpacing="-0.02"
-            android:fontFamily="sans-serif-light"/>
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/city1_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="пн 1 янв"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            android:gravity="center"
-            android:alpha="0.75"/>
+            android:textColor="#CCFFFFFF"
+            android:textSize="11sp"
+            android:gravity="center"/>
 
     </LinearLayout>
 
-    <!-- Divider -->
     <View
         android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="#44FFFFFF"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_height="40dp"
+        android:background="#55FFFFFF"/>
 
-    <!-- City 2: Kogalym -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@android:color/transparent"
-        android:padding="12dp">
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/city2_name"
@@ -77,10 +66,8 @@
             android:layout_height="wrap_content"
             android:text="Когалым"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            android:gravity="center"
-            android:alpha="0.9"/>
+            android:textSize="13sp"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/city2_time"
@@ -88,21 +75,18 @@
             android:layout_height="wrap_content"
             android:text="00:00"
             android:textColor="#FFFFFF"
-            android:textSize="36sp"
+            android:textSize="34sp"
             android:textStyle="bold"
-            android:gravity="center"
-            android:letterSpacing="-0.02"
-            android:fontFamily="sans-serif-light"/>
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/city2_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="пн 1 янв"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            android:gravity="center"
-            android:alpha="0.75"/>
+            android:textColor="#CCFFFFFF"
+            android:textSize="11sp"
+            android:gravity="center"/>
 
     </LinearLayout>
 

@@ -4,35 +4,33 @@ import android.app.Service
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
+import android.os.Handler
 import android.os.IBinder
-import java.util.Timer
-import java.util.TimerTask
+import android.os.Looper
 
 class ClockUpdateService : Service() {
 
-    private var timer: Timer? = null
+    private val handler = Handler(Looper.getMainLooper())
+    private val runnable = object : Runnable {
+        override fun run() {
+            val mgr = AppWidgetManager.getInstance(this@ClockUpdateService)
+            val ids = mgr.getAppWidgetIds(
+                ComponentName(this@ClockUpdateService, DualClockWidget::class.java)
+            )
+            for (id in ids) DualClockWidget.update(this@ClockUpdateService, mgr, id)
+            handler.postDelayed(this, 60_000L)
+        }
+    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        timer?.cancel()
-        timer = Timer()
-        timer?.scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
-                val manager = AppWidgetManager.getInstance(this@ClockUpdateService)
-                val ids = manager.getAppWidgetIds(
-                    ComponentName(this@ClockUpdateService, DualClockWidget::class.java)
-                )
-                ids.forEach { id ->
-                    DualClockWidget.updateWidget(this@ClockUpdateService, manager, id)
-                }
-            }
-        }, 0, 60_000L)
+        handler.post(runnable)
         return START_STICKY
     }
 
-    override fun onBind(intent: Intent?): IBinder? = null
-
     override fun onDestroy() {
-        timer?.cancel()
+        handler.removeCallbacks(runnable)
         super.onDestroy()
     }
+
+    override fun onBind(intent: Intent?): IBinder? = null
 }
