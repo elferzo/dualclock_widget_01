@@ -26,7 +26,7 @@ cp AndroidManifest.xml app/src/main/
 
 # --- Gradle files ---
 cp build.gradle    app/
-cp settings.gradle .
+# settings.gradle stays in root — already there, no copy needed
 
 # --- Root build.gradle (project-level) ---
 cat > build.gradle << 'EOF'
