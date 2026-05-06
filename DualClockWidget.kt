@@ -7,6 +7,11 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
 import android.util.Log
 import android.widget.RemoteViews
 import java.text.SimpleDateFormat
@@ -32,11 +37,9 @@ class DualClockWidget : AppWidgetProvider() {
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
-        Log.e("DUALCLOCK", "onReceive action=${intent.action}")
         if (intent.action == TICK) {
             val mgr = AppWidgetManager.getInstance(context)
             val ids = mgr.getAppWidgetIds(ComponentName(context, DualClockWidget::class.java))
-            Log.e("DUALCLOCK", "TICK update ids=${ids.toList()}")
             for (id in ids) update(context, mgr, id)
             schedule(context)
         }
@@ -45,16 +48,26 @@ class DualClockWidget : AppWidgetProvider() {
     companion object {
         const val TICK = "com.dualclock.TICK"
 
+        // city: 13sp bold (base), time: ~2.8x = ~36sp bold
+        private fun buildText(city: String, time: String): SpannableString {
+            val s = SpannableString("$city\n$time")
+            val ts = city.length + 1
+            val te = s.length
+            s.setSpan(StyleSpan(Typeface.BOLD), 0, te, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            s.setSpan(RelativeSizeSpan(2.8f), ts, te, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            return s
+        }
+
         fun update(context: Context, mgr: AppWidgetManager, id: Int) {
             val views = RemoteViews(context.packageName, R.layout.widget_layout)
             val now = Date()
             val tf = SimpleDateFormat("HH:mm", Locale.getDefault())
 
             tf.timeZone = TimeZone.getTimeZone("GMT+4")
-            views.setTextViewText(R.id.city1_block, "Астрахань\n${tf.format(now)}")
+            views.setTextViewText(R.id.city1_block, buildText("Астрахань", tf.format(now)))
 
             tf.timeZone = TimeZone.getTimeZone("GMT+5")
-            views.setTextViewText(R.id.city2_block, "Когалым\n${tf.format(now)}")
+            views.setTextViewText(R.id.city2_block, buildText("Когалым", tf.format(now)))
 
             mgr.updateAppWidget(id, views)
         }
@@ -65,7 +78,6 @@ class DualClockWidget : AppWidgetProvider() {
                 set(Calendar.SECOND, 0)
                 set(Calendar.MILLISECOND, 0)
             }
-            Log.e("DUALCLOCK", "schedule next at ${cal.time}")
             (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager)
                 .setExactAndAllowWhileIdle(AlarmManager.RTC, cal.timeInMillis, pendingIntent(context))
         }
