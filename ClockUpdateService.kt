@@ -25,7 +25,7 @@ class ClockUpdateService : Service() {
                     DualClockWidget.updateWidget(this@ClockUpdateService, manager, id)
                 }
             }
-        }, 0, 60_000L) // update every minute
+        }, 0, 60_000L)
         return START_STICKY
     }
 
