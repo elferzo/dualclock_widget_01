@@ -18,23 +18,15 @@ class DualClockWidget : AppWidgetProvider() {
             try {
                 val views = RemoteViews(context.packageName, R.layout.widget_layout)
                 val now = Date()
-
                 val tf = SimpleDateFormat("HH:mm", Locale.getDefault())
-                val df = SimpleDateFormat("EEE d MMM", Locale("ru"))
 
                 tf.timeZone = TimeZone.getTimeZone("GMT+4")
-                df.timeZone = TimeZone.getTimeZone("GMT+4")
-                views.setTextViewText(
-                    R.id.city1_block,
-                    "Астрахань\n${tf.format(now)}\n${df.format(now)}"
-                )
+                views.setTextViewText(R.id.city1_name, "Астрахань")
+                views.setTextViewText(R.id.city1_time, tf.format(now))
 
                 tf.timeZone = TimeZone.getTimeZone("GMT+5")
-                df.timeZone = TimeZone.getTimeZone("GMT+5")
-                views.setTextViewText(
-                    R.id.city2_block,
-                    "Когалым\n${tf.format(now)}\n${df.format(now)}"
-                )
+                views.setTextViewText(R.id.city2_name, "Когалым")
+                views.setTextViewText(R.id.city2_time, tf.format(now))
 
                 appWidgetManager.updateAppWidget(id, views)
             } catch (e: Exception) {
