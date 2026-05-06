@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.dualclock.widget"
-        minSdk 26
+        minSdk 21
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -32,6 +32,4 @@ android {
     }
 }
 
-dependencies {
-    // No androidx dependencies — not needed for a simple widget
-}
+dependencies {}

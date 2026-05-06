@@ -14,7 +14,7 @@ class DualClockWidget : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-        for (appWidgetId in appWidgetIds) {
+        for (id in appWidgetIds) {
             try {
                 val views = RemoteViews(context.packageName, R.layout.widget_layout)
                 val now = Date()
@@ -24,17 +24,19 @@ class DualClockWidget : AppWidgetProvider() {
 
                 tf.timeZone = TimeZone.getTimeZone("GMT+4")
                 df.timeZone = TimeZone.getTimeZone("GMT+4")
-                views.setTextViewText(R.id.city1_name, "Астрахань")
-                views.setTextViewText(R.id.city1_time, tf.format(now))
-                views.setTextViewText(R.id.city1_date, df.format(now))
+                views.setTextViewText(
+                    R.id.city1_block,
+                    "Астрахань\n${tf.format(now)}\n${df.format(now)}"
+                )
 
                 tf.timeZone = TimeZone.getTimeZone("GMT+5")
                 df.timeZone = TimeZone.getTimeZone("GMT+5")
-                views.setTextViewText(R.id.city2_name, "Когалым")
-                views.setTextViewText(R.id.city2_time, tf.format(now))
-                views.setTextViewText(R.id.city2_date, df.format(now))
+                views.setTextViewText(
+                    R.id.city2_block,
+                    "Когалым\n${tf.format(now)}\n${df.format(now)}"
+                )
 
-                appWidgetManager.updateAppWidget(appWidgetId, views)
+                appWidgetManager.updateAppWidget(id, views)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
