@@ -9,33 +9,35 @@ import java.util.*
 
 class DualClockWidget : AppWidgetProvider() {
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
         for (appWidgetId in appWidgetIds) {
-            updateWidget(context, appWidgetManager, appWidgetId)
-        }
-    }
+            try {
+                val views = RemoteViews(context.packageName, R.layout.widget_layout)
+                val now = Date()
 
-    companion object {
-        fun updateWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
-            val views = RemoteViews(context.packageName, R.layout.widget_layout)
+                val tf = SimpleDateFormat("HH:mm", Locale.getDefault())
+                val df = SimpleDateFormat("EEE d MMM", Locale("ru"))
 
-            val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-            val dateFormat = SimpleDateFormat("EEE d MMM", Locale("ru"))
-            val now = Date()
+                tf.timeZone = TimeZone.getTimeZone("GMT+4")
+                df.timeZone = TimeZone.getTimeZone("GMT+4")
+                views.setTextViewText(R.id.city1_name, "Астрахань")
+                views.setTextViewText(R.id.city1_time, tf.format(now))
+                views.setTextViewText(R.id.city1_date, df.format(now))
 
-            timeFormat.timeZone = TimeZone.getTimeZone("GMT+4")
-            dateFormat.timeZone = TimeZone.getTimeZone("GMT+4")
-            views.setTextViewText(R.id.city1_name, "Астрахань")
-            views.setTextViewText(R.id.city1_time, timeFormat.format(now))
-            views.setTextViewText(R.id.city1_date, dateFormat.format(now))
+                tf.timeZone = TimeZone.getTimeZone("GMT+5")
+                df.timeZone = TimeZone.getTimeZone("GMT+5")
+                views.setTextViewText(R.id.city2_name, "Когалым")
+                views.setTextViewText(R.id.city2_time, tf.format(now))
+                views.setTextViewText(R.id.city2_date, df.format(now))
 
-            timeFormat.timeZone = TimeZone.getTimeZone("GMT+5")
-            dateFormat.timeZone = TimeZone.getTimeZone("GMT+5")
-            views.setTextViewText(R.id.city2_name, "Когалым")
-            views.setTextViewText(R.id.city2_time, timeFormat.format(now))
-            views.setTextViewText(R.id.city2_date, dateFormat.format(now))
-
-            appWidgetManager.updateAppWidget(appWidgetId, views)
+                appWidgetManager.updateAppWidget(appWidgetId, views)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 }
