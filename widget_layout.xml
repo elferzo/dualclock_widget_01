@@ -7,24 +7,60 @@
     android:orientation="horizontal"
     android:background="@android:color/transparent">
 
-    <TextView
-        android:id="@+id/city1_block"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="Астрахань\n00:00"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"/>
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/city2_block"
+        <TextView
+            android:id="@+id/city1_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Астрахань"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/city1_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textColor="#FFFFFF"
+            android:textSize="38sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="Когалым\n00:00"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"/>
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/city2_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Когалым"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/city2_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textColor="#FFFFFF"
+            android:textSize="38sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+    </LinearLayout>
 
 </LinearLayout>

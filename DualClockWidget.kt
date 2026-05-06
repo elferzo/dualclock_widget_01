@@ -45,10 +45,12 @@ class DualClockWidget : AppWidgetProvider() {
                 val tf = SimpleDateFormat("HH:mm", Locale.getDefault())
 
                 tf.timeZone = TimeZone.getTimeZone("GMT+4")
-                views.setTextViewText(R.id.city1_block, "Астрахань\n${tf.format(now)}")
+                views.setTextViewText(R.id.city1_name, "Астрахань")
+                views.setTextViewText(R.id.city1_time, tf.format(now))
 
                 tf.timeZone = TimeZone.getTimeZone("GMT+5")
-                views.setTextViewText(R.id.city2_block, "Когалым\n${tf.format(now)}")
+                views.setTextViewText(R.id.city2_name, "Когалым")
+                views.setTextViewText(R.id.city2_time, tf.format(now))
 
                 mgr.updateAppWidget(id, views)
             } catch (e: Exception) {
