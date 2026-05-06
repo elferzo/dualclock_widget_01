@@ -13,8 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:text="Астрахань\n00:00"
         android:textColor="#FFFFFF"
-        android:textSize="17sp"/>
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/city2_block"
@@ -22,7 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:text="Когалым\n00:00"
         android:textColor="#FFFFFF"
-        android:textSize="17sp"/>
+        android:textSize="16sp"/>
 
 </LinearLayout>

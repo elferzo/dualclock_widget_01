@@ -7,9 +7,6 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.RelativeSizeSpan
 import android.widget.RemoteViews
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,15 +38,6 @@ class DualClockWidget : AppWidgetProvider() {
     companion object {
         const val ACTION_UPDATE = "com.dualclock.widget.UPDATE"
 
-        // Build "City\nHH:mm" with time 2.2x bigger using SpannableString
-        fun buildText(city: String, time: String): SpannableString {
-            val text = "$city\n$time"
-            val span = SpannableString(text)
-            val start = city.length + 1
-            span.setSpan(RelativeSizeSpan(2.2f), start, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            return span
-        }
-
         fun updateWidget(context: Context, mgr: AppWidgetManager, id: Int) {
             try {
                 val views = RemoteViews(context.packageName, R.layout.widget_layout)
@@ -57,10 +45,10 @@ class DualClockWidget : AppWidgetProvider() {
                 val tf = SimpleDateFormat("HH:mm", Locale.getDefault())
 
                 tf.timeZone = TimeZone.getTimeZone("GMT+4")
-                views.setTextViewText(R.id.city1_block, buildText("Астрахань", tf.format(now)))
+                views.setTextViewText(R.id.city1_block, "Астрахань\n${tf.format(now)}")
 
                 tf.timeZone = TimeZone.getTimeZone("GMT+5")
-                views.setTextViewText(R.id.city2_block, buildText("Когалым", tf.format(now)))
+                views.setTextViewText(R.id.city2_block, "Когалым\n${tf.format(now)}")
 
                 mgr.updateAppWidget(id, views)
             } catch (e: Exception) {
