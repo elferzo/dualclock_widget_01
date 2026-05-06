@@ -13,7 +13,8 @@ mkdir -p gradle/wrapper
 mkdir -p .github/workflows
 
 # --- Kotlin sources ---
-cp DualClockWidget.kt     app/src/main/kotlin/com/dualclock/widget/
+cp ClockService.kt       app/src/main/kotlin/com/dualclock/widget/
+ cp DualClockWidget.kt     app/src/main/kotlin/com/dualclock/widget/
 cp BootReceiver.kt        app/src/main/kotlin/com/dualclock/widget/
 
 # --- Resources ---
