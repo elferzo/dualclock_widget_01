@@ -11,8 +11,8 @@
         android:id="@+id/test_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TEST 00:00:00"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"/>
+        android:text="STATIC TEXT"
+        android:textColor="#FF0000"
+        android:textSize="24sp"/>
 
 </LinearLayout>
