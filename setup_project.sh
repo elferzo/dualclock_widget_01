@@ -47,7 +47,6 @@ curl -sL "https://raw.githubusercontent.com/gradle/gradle/v8.4.0/gradlew" -o gra
 chmod +x gradlew
 
 # --- CI workflow ---
-cp build_apk.yml .github/workflows/
 
 echo "Project structure ready!"
 echo ""
