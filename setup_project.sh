@@ -9,6 +9,7 @@ mkdir -p app/src/main/kotlin/com/dualclock/widget
 mkdir -p app/src/main/res/layout
 mkdir -p app/src/main/res/xml
 mkdir -p app/src/main/res/values
+mkdir -p gradle/wrapper
 mkdir -p .github/workflows
 
 # --- Kotlin sources ---
@@ -24,65 +25,30 @@ cp strings.xml        app/src/main/res/values/
 # --- Manifest ---
 cp AndroidManifest.xml app/src/main/
 
-# --- Gradle files ---
-cp build.gradle    app/
-# settings.gradle stays in root — already there, no copy needed
+# --- App-level build.gradle ---
+cp build.gradle app/
 
 # --- Root build.gradle (project-level) ---
-cat > build.gradle << 'EOF'
-plugins {
-    id 'com.android.application' version '8.2.0' apply false
-    id 'org.jetbrains.kotlin.android' version '1.9.22' apply false
-}
-EOF
+printf 'plugins {\n    id '"'"'com.android.application'"'"' version '"'"'8.2.0'"'"' apply false\n    id '"'"'org.jetbrains.kotlin.android'"'"' version '"'"'1.9.22'"'"' apply false\n}\n' > build.gradle
 
-# --- gradle wrapper ---
-cat > gradle/wrapper/gradle-wrapper.properties << 'EOF' 2>/dev/null || (mkdir -p gradle/wrapper && cat > gradle/wrapper/gradle-wrapper.properties << 'EOF2'
-distributionBase=GRADLE_USER_HOME
-distributionPath=wrapper/dists
-distributionUrl=https\://services.gradle.org/distributions/gradle-8.4-bin.zip
-zipStoreBase=GRADLE_USER_HOME
-zipStorePath=wrapper/dists
-EOF2
-)
-EOF
+# --- gradle-wrapper.properties ---
+printf 'distributionBase=GRADLE_USER_HOME\ndistributionPath=wrapper/dists\ndistributionUrl=https\\://services.gradle.org/distributions/gradle-8.4-bin.zip\nzipStoreBase=GRADLE_USER_HOME\nzipStorePath=wrapper/dists\n' > gradle/wrapper/gradle-wrapper.properties
 
-mkdir -p gradle/wrapper
-cat > gradle/wrapper/gradle-wrapper.properties << 'EOF'
-distributionBase=GRADLE_USER_HOME
-distributionPath=wrapper/dists
-distributionUrl=https\://services.gradle.org/distributions/gradle-8.4-bin.zip
-zipStoreBase=GRADLE_USER_HOME
-zipStorePath=wrapper/dists
-EOF
+# --- Download gradle wrapper jar ---
+curl -sL "https://raw.githubusercontent.com/gradle/gradle/v8.4.0/gradle/wrapper/gradle-wrapper.jar" \
+  -o gradle/wrapper/gradle-wrapper.jar || true
 
-# Download gradle wrapper jar
-curl -sL "https://raw.githubusercontent.com/nicowillis/android-gradle-wrapper/main/gradle/wrapper/gradle-wrapper.jar" \
-  -o gradle/wrapper/gradle-wrapper.jar 2>/dev/null || \
-  (cd /tmp && wget -q https://services.gradle.org/distributions/gradle-8.4-bin.zip -O gradle.zip && \
-   unzip -q gradle.zip && cp gradle-8.4/lib/plugins/gradle-wrapper-8.4.jar \
-   $GITHUB_WORKSPACE/gradle/wrapper/gradle-wrapper.jar 2>/dev/null) || true
-
-# Use gradle wrapper from SDK if available
 if [ ! -f "gradle/wrapper/gradle-wrapper.jar" ]; then
-  gradle wrapper --gradle-version 8.4
+  gradle wrapper --gradle-version 8.4 2>/dev/null || true
 fi
 
-# --- gradlew script ---
-cat > gradlew << 'EOF'
-#!/bin/sh
-exec "$(dirname "$0")/gradle/wrapper/gradle-wrapper" "$@"
-EOF
-
-# Use standard gradlew
-curl -sL "https://raw.githubusercontent.com/gradle/gradle/v8.4.0/gradlew" -o gradlew 2>/dev/null || true
+# --- Download standard gradlew ---
+curl -sL "https://raw.githubusercontent.com/gradle/gradle/v8.4.0/gradlew" -o gradlew || true
 chmod +x gradlew
 
 # --- CI workflow ---
-mkdir -p .github/workflows
 cp build_apk.yml .github/workflows/
 
 echo "Project structure ready!"
 echo ""
-echo "Structure:"
 find app/src -type f | sort
