@@ -7,11 +7,6 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.RelativeSizeSpan
-import android.text.style.StyleSpan
-import android.graphics.Typeface
 import android.widget.RemoteViews
 import java.text.SimpleDateFormat
 import java.util.*
@@ -43,31 +38,11 @@ class DualClockWidget : AppWidgetProvider() {
     companion object {
         const val ACTION_UPDATE = "com.dualclock.widget.UPDATE"
 
-        private fun buildSpan(city: String, time: String): SpannableString {
-            val s = SpannableString("$city\n$time")
-            val start = city.length + 1
-            val end = s.length
-            s.setSpan(RelativeSizeSpan(2.4f), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            s.setSpan(StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            return s
-        }
-
         fun updateWidget(context: Context, mgr: AppWidgetManager, id: Int) {
-            try {
-                val views = RemoteViews(context.packageName, R.layout.widget_layout)
-                val now = Date()
-                val tf = SimpleDateFormat("HH:mm", Locale.getDefault())
-
-                tf.timeZone = TimeZone.getTimeZone("GMT+4")
-                views.setTextViewText(R.id.city1_name, buildSpan("Астрахань", tf.format(now)))
-
-                tf.timeZone = TimeZone.getTimeZone("GMT+5")
-                views.setTextViewText(R.id.city2_name, buildSpan("Когалым", tf.format(now)))
-
-                mgr.updateAppWidget(id, views)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            val views = RemoteViews(context.packageName, R.layout.widget_layout)
+            val time = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+            views.setTextViewText(R.id.test_text, "TEST $time")
+            mgr.updateAppWidget(id, views)
         }
 
         fun scheduleNextUpdate(context: Context) {
