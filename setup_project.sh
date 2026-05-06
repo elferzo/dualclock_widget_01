@@ -44,6 +44,9 @@ fi
 
 # --- Download standard gradlew ---
 curl -sL "https://raw.githubusercontent.com/gradle/gradle/v8.4.0/gradlew" -o gradlew || true
+# --- gradle.properties ---
+printf "android.useAndroidX=true\nandroid.enableJetifier=true\norg.gradle.jvmargs=-Xmx2048m\n" > gradle.properties
+
 chmod +x gradlew
 
 # --- CI workflow ---
