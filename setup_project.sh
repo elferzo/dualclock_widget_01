@@ -14,6 +14,7 @@ mkdir -p .github/workflows
 
 # --- Kotlin sources ---
  cp DualClockWidget.kt     app/src/main/kotlin/com/dualclock/widget/
+cp MainActivity.kt        app/src/main/kotlin/com/dualclock/widget/
 cp BootReceiver.kt        app/src/main/kotlin/com/dualclock/widget/
 
 # --- Resources ---
