@@ -48,7 +48,6 @@ class DualClockWidget : AppWidgetProvider() {
     companion object {
         const val TICK = "com.dualclock.TICK"
 
-        // city: 13sp bold (base), time: ~2.8x = ~36sp bold
         private fun buildText(city: String, time: String): SpannableString {
             val s = SpannableString("$city\n$time")
             val ts = city.length + 1
@@ -63,8 +62,8 @@ class DualClockWidget : AppWidgetProvider() {
             val now = Date()
             val tf = SimpleDateFormat("HH:mm", Locale.getDefault())
 
-            tf.timeZone = TimeZone.getTimeZone("GMT+4")
-            views.setTextViewText(R.id.city1_block, buildText("Астрахань", tf.format(now)))
+            tf.timeZone = TimeZone.getTimeZone("Europe/Moscow")
+            views.setTextViewText(R.id.city1_block, buildText("Москва", tf.format(now)))
 
             tf.timeZone = TimeZone.getTimeZone("GMT+5")
             views.setTextViewText(R.id.city2_block, buildText("Когалым", tf.format(now)))
